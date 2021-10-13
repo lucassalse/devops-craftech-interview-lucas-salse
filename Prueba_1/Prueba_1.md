@@ -10,7 +10,7 @@ A continuación lo que se busca es poder diseñar un diagrama de red empleando l
 ## Desarrollo
 ### Diseño e implementación
 
-![diagrama_de_red](/images/diagrama_prueba1.png)
+![diagrama_de_red](./images/diagrama_prueba1.png)
 
 *Figura 1: Diagrama de red implementado*
 

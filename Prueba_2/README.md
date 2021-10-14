@@ -71,6 +71,25 @@ $ kompose convert -o ../kubernetes/
   ```shell
   $ kubectl apply -f ../Kubernetes/.
   ```
+### Servicio de ingress
+- En este aparatado se dicidio poder agregar un service de ingress el cual nos va a pertmitir además de funcionar como un balanceador de carga (laod balancer) redirigir el tráfico que llegue a nuestro cluster, comunicarse con los servicios en cuestión y consumir los pods necesarios de nustra app. Es decir tener acceso a nuestros servicios basados en un path.
 
+![diagrama_ingress](./images/ingress_diagrm.png)
 
+*Figura 1: Diagrama de un ingress*
+
+Para poder generar un ingress empleando amazon AWS se debería seguir el siguiente enlace:
+
+[Ingress controller in AWS](https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/)
+
+Una vez generado nuestro ingress se debería aplicar con el siguiente comando:
+``` shell
+$ kubectl apply -f ../kubernetes/ingress-controller.yaml
+```
+
+#### Referencias utilizadas
+Enlaces:
+- [Service ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [Ingress controller in AWS](https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/)
+---
 

@@ -49,3 +49,28 @@ Enlaces:
 - [Compose and Django](https://docs.docker.com/samples/django/)
 ---
 
+### Guia para deploy de services usando kubernetes
+- Crear los archivos de kubernetes necesarios, para esto se emplea el siguiente comando:
+
+```shell
+$ kompose convert -o ../kubernetes/
+```
+*Aclaración: [Previamente debemos instalar kompose](https://kompose.io/installation/)* 
+- Una vez que obtenemos los archivos que generamos se busca poder corroborar su funcionamiento en minikube
+  - Creamos un namespace:
+    ``` shell
+    $ kubectl create namespace <namespace name>
+    ```
+  -  Nos movemos a ese namespace 
+    ``` shell
+    $ kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]
+    ```
+  -  Al momento de levantar los archivos correspondiente se puede ver que tanto en el deployment del backend como del frontend la imagen que solicita buscar no se encucentra debido a que nosotros la generamos de manera local. Por esto se suben dichas imagenes a dockerhub.
+  -  Como en el docker-compose la db no tenia un port asignado explicitamente dado que se comunicaba internamente con el back al momento de generar los files necesarios con *kompose* no se genero un service. Es por esta razón que se debe generar un service necesariamente dado que para poder comunicar nuestros pods se requiere de este.
+  -  Una vez que tenemos todos los archivos debemos poder "aplicarlos" con el siguiente comando:
+  ```shell
+  $ kubectl apply -f ../Kubernetes/.
+  ```
+
+
+

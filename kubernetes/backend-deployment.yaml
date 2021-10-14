@@ -26,31 +26,41 @@ spec:
     spec:
       containers:
         - env:
-            - name: POSTGRES_DB
+            - name: DB_ENGINE
               valueFrom:
                 configMapKeyRef:
-                  key: POSTGRES_DB
-                  name: envs--postgres
-            - name: POSTGRES_PASSWORD
+                  key: DB_ENGINE
+                  name: envs--env-back
+            - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  key: POSTGRES_PASSWORD
-                  name: envs--postgres
-            - name: POSTGRES_PORT
+                  key: DB_HOST
+                  name: envs--env-back
+            - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  key: POSTGRES_PORT
-                  name: envs--postgres
-            - name: POSTGRES_USER
+                  key: DB_NAME
+                  name: envs--env-back
+            - name: DB_PASS
               valueFrom:
                 configMapKeyRef:
-                  key: POSTGRES_USER
-                  name: envs--postgres
+                  key: DB_PASS
+                  name: envs--env-back
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_PORT
+                  name: envs--env-back
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_USER
+                  name: envs--env-back
             - name: SECRET_KEY
               valueFrom:
                 configMapKeyRef:
                   key: SECRET_KEY
-                  name: envs--postgres
+                  name: envs--env-back
           image: lucassalse/app-backend:final
           name: backend
           ports:

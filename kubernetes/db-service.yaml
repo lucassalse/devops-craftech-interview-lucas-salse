@@ -7,4 +7,4 @@ spec:
     - port: 5432
       targetPort: 5432
   selector:
-    io.kompose.service: db
+    io.kompose.service: db-postgres

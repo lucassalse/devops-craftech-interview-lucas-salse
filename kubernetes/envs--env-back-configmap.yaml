@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  DB_ENGINE: django.db.backends.postgresql
+  DB_HOST: db_postgres
+  DB_NAME: postgres
+  DB_PASS: postgres
+  DB_PORT: "5432"
+  DB_USER: postgres
+  SECRET_KEY: craftech
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: backend-envs--env-back
+  name: envs--env-back

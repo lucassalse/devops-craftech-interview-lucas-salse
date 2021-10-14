@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-    db:
+    db_postgres:
         image: postgres:12
         volumes:
             - ./data/db:/var/lib/postgresql/data
@@ -15,9 +15,9 @@ services:
         ports:
             - 8000:8000
         env_file:
-            - ./.envs/.postgres
+            - ./.envs/.env-back
         depends_on:
-            - db
+            - db_postgres
         networks:
             - net-app
 

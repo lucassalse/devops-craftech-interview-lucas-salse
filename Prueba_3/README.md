@@ -2,7 +2,7 @@
 
 ## Dockerizar el nginx
 
-- Para poder dockerizar el nginx se creo su Dockerfile correspondiente y luego mediante un docker-compose que se encuentra en este directorio se llevo a cabo el seteo de los ports como así también del volumenes necesarios.
+- Para poder dockerizar el nginx se creó su Dockerfile correspondiente y luego mediante un docker-compose que se encuentra en este directorio se llevó a cabo el seteo de los ports como así también del volumenes necesarios.
 
 #### Referencias utilizadas
 Enlaces:
@@ -10,7 +10,7 @@ Enlaces:
 ---
 
 ### Elaboración del pipeline
-- Luego para poder llevar a cabo que mediante un cambio sobre el archivo index.html se genere (buildee) una nueva imagen en el repositorio de dockerhub se utilizo github-actions, teniendo en cuenta que solo debe efectuar una actions cuando se medofica el index.html.
+- Luego para poder llevar a cabo que mediante un cambio sobre el archivo index.html se genere (buildee) una nueva imagen en el repositorio de dockerhub se utilizó github-actions, teniendo en cuenta que solo debe efectuar una actions cuando se modifica el index.html.
 
 #### Referencias utilizadas
 Enlaces:
@@ -29,13 +29,13 @@ $ kompose convert -o ../kubernetes-web-service/
 ```shell
 $ kubectl create namespace web-service-ns
 ```
-- Aplicamos nuestros archivos en dicho namespace previamente moviendonos al mismo:
+- Aplicamos nuestros archivos en dicho namespace previamente moviéndonos al mismo:
 
 ``` shell
     $ kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] --namespace=web-service-ns
     $ kubectl apply -f ../kubernetes-web-service/.
 ```
-- Se agrega al workflows llamado push.yaml, la parte para poder hacer el deploy en nuestro cluster, para ello se uso un actions de **Kubernetes AWS/EKS Action**. La cual necesita además de las credenciales de AWS:
+- Se agrega al workflows llamado push.yaml, la parte para poder hacer el deploy en nuestro cluster, para ello se usó un actions de **Kubernetes AWS/EKS Action**. La cual necesita además de las credenciales de AWS:
 ``` shell
     secrets.AWS_ACCESS_KEY_ID
     secrets.AWS_SECRET_ACCESS_KEY

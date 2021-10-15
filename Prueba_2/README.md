@@ -2,12 +2,12 @@
 
 ## Dockerizar la aplicación front-end y backend
 
-Para poder llevar a cabo la dockerización de la app, lo primero que se hizo fue diseñar los Dockerfile para cada uno de los componentes, debido a que con los mismos nos permitira poder builder una imagen y con esta levantar los contenedores necesarios.
+Para poder llevar a cabo la dockerización de la app, lo primero que se hizo fue diseñar los Dockerfile para cada uno de los componentes, debido a que con los mismos nos permitirá poder builder una imagen y con esta levantar los contenedores necesarios.
 Los Dockerfile tanto del backend como del frontend se encuentran en sus correspondientes directorios, ../backend y ../forntend
 
 ### Dockerfile backend
-- En una primera instancia se trato de usar como base (FROM python:3.7-alpine) la misma genero una serie de inconvenientes al momento de llevar a cabo la instalación de las dependencias necesarias para la app Django, entre ellas *Psycopg, Psycopg-binary, gcc*, entre otras. Se pudo solucionar algunas de ellas como por ejemplo psycopg instlando los paquetes necesarios como  *gcc musl-dev postgresql-dev*. A medida que se solucinoban estos problemas surgian otros por lo tanto se investigo si realmente emplear una imagen de base como alpine era lo más óptimo y se pudo determinar que esta imagen de base se emplea para ciertas cosas en especificas y que por lo general se utiliza una imagen de python *slim buster* que fue con la cual se realizó el Dockerfile.
-- Una vez que se buildeo la imagen, se buscó disminuir su tamaño para esto se removieron en la capa en la cual se instalan las dependecias, remover aquellas que ya no nos hacen falta.
+- En una primera instancia se trató de usar como base *(FROM python:3.7-alpine)* la misma generó una serie de inconvenientes al momento de llevar a cabo la instalación de las dependencias necesarias para la app Django, entre ellas *Psycopg, Psycopg-binary, gcc*, entre otras. Se pudo solucionar algunas de ellas como por ejemplo *psycopg* instalando los paquetes necesarios como  *gcc musl-dev postgresql-dev*. A medida que se solucinoban estos problemas surgían otros por lo tanto se investigó si realmente emplear una imagen de base como alpine era lo más óptimo y se pudo determinar que esta imagen de base se emplea para ciertas cosas en específicas y que por lo general se utiliza una imagen de python *slim buster* que fue con la cual se realizó el Dockerfile.
+- Una vez que se buildeo la imagen, se buscó disminuir su tamaño para esto se removieron en la capa en la cual se instalan las dependencias, remover aquellas que ya no nos hacen falta.
 **Para poder buildear la imagen se usa el siguiente comando:**
 ```shell
 $ cd ../backend
@@ -24,7 +24,7 @@ Enlaces:
 
 #### Dockerfile frontend
 - En el Dockerfile del frontend no se tuvo mayores inconveniente empleando una imagen base de (node:14-alpine).
-**Para poder buildear la imagen se debe colocar el siguinte comando.**
+**Para poder buildear la imagen se debe colocar el siguiente comando.**
 
 ```shell
 $ cd ../frontend
@@ -39,8 +39,13 @@ Enlaces:
 
 #### Docker-compose
 - En el siguiente apartado se busca realizar el docker-compose el mismo nos permitirá poder simplificar las cosas mediante este archivo tipo .yaml. que nos permite poder levantar todo lo necesario de una sola vez.
-- Una de las cuestiones que se debio resolver es la inclusión de una BD dado que la parte del backend necesita poder utilizar una. Se eligio emplear posgresDB.
-- Además cabe aclarar que fue necesario determinar un variable de entorno para SECRET_KEY dado que sin ella el contendor no inicia. Todo esto se pudo resolver haciendo uso del comando *docker logs <id_container>*
+- Una de las cuestiones que se debió resolver es la inclusión de una BD dado que la parte del backend necesita poder utilizar una. Se eligió emplear posgresDB.
+- Además cabe aclarar que fue necesario determinar un variable de entorno para **SECRET_KEY** dado que sin ella el contendor no inicia. Todo esto se pudo resolver haciendo uso del comando *docker logs <id_container>*
+- Para levantar los contenedores usando docker-compose se utiliza el siguiente comando:
+
+```shell
+$ docker-compuse up
+```
 
 #### Referencias utilizadas
 Enlaces:
@@ -65,14 +70,14 @@ $ kompose convert -o ../kubernetes/
     ``` shell
     $ kubectl config set-context NAME [--cluster=cluster_nickname] [--user=user_nickname] [--namespace=namespace]
     ```
-  -  Al momento de levantar los archivos correspondiente se puede ver que tanto en el deployment del backend como del frontend la imagen que solicita buscar no se encucentra debido a que nosotros la generamos de manera local. Por esto se suben dichas imagenes a dockerhub.
-  -  Como en el docker-compose la db no tenia un port asignado explicitamente dado que se comunicaba internamente con el back al momento de generar los files necesarios con *kompose* no se genero un service. Es por esta razón que se debe generar un service necesariamente dado que para poder comunicar nuestros pods se requiere de este.
+  -  Al momento de levantar los archivos correspondiente se puede ver que tanto en el deployment del backend como del frontend la imagen que solicita buscar no se encuentra debido a que nosotros la generamos de manera local. Por esto se suben dichas imágenes a dockerhub.
+  -  Como en el docker-compose la db no tenía un port asignado explícitamente dado que se comunica internamente con el back al momento de generar los files necesarios con *kompose* no se generó un service. Es por esta razón que se debe generar un service necesariamente dado que para poder comunicar nuestros pods se requiere de este.
   -  Una vez que tenemos todos los archivos debemos poder "aplicarlos" con el siguiente comando:
   ```shell
   $ kubectl apply -f ../Kubernetes/.
   ```
 ### Servicio de ingress
-- En este aparatado se dicidio poder agregar un service de ingress el cual nos va a pertmitir además de funcionar como un balanceador de carga (laod balancer) redirigir el tráfico que llegue a nuestro cluster, comunicarse con los servicios en cuestión y consumir los pods necesarios de nustra app. Es decir tener acceso a nuestros servicios basados en un path.
+- En este apartado se dicidió poder agregar un service de ingress el cual nos va a pertmitir además de funcionar como un balanceador de carga (load balancer) redirigir el tráfico que llegue a nuestro cluster, comunicarse con los servicios en cuestión y consumir los pods necesarios de nuestra app. Es decir tener acceso a nuestros servicios basados en un path.
 
 ![diagrama_ingress](./images/ingress_diagrm.png)
 

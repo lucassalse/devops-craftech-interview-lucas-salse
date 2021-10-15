@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o ../kubernetes-web-service/
+    kompose.version: 1.24.0 (4a2a0458)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-service
+  name: web-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web-service
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o ../kubernetes-web-service/
+        kompose.version: 1.24.0 (4a2a0458)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web-service
+    spec:
+      containers:
+        - image: nginx:1.20-alpine
+          name: web-service
+          ports:
+            - containerPort: 80
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: web-service-claim0
+      restartPolicy: Always
+      volumes:
+        - name: web-service-claim0
+          persistentVolumeClaim:
+            claimName: web-service-claim0
+status: {}

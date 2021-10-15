@@ -4,6 +4,12 @@ on:
   push:
     paths:
       - '**.html'
+
+# env:
+#   WEB_SERVICE_IMAGE: lucassalse/craftech-interview:${{ github.sha }}
+#   WEB_SERVICE_NAMESPACE: web-service-ns
+#   WEB_SERVICE_DEPLOYMENT: web-service
+
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -36,4 +42,11 @@ jobs:
       #   env:
       #     KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       #   with:
-      #     args: apply deployment.yaml
+      #     args: set image deployment $WEB_SERVICE_DEPLOYMENT -n $WEB_SERVICE_NAMESPACE $WEB_SERVICE_DEPLOYMENT=$WEB_SERVICE_IMAGE
+  
+      # - name: verify deployment
+      #   uses: Consensys/kubernetes-action@master
+      #   env:
+      #     KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      #   with:
+      #     args: rollout status deployment/$WEB_SERVICE_DEPLOYMENT -n $WEB_SERVICE_NAMESPACE
